@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Journey - Jonnada Raju</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cosmic-black: #000000;
+            --deep-space: #0a0a0f;
+            --nebula-purple: #7b2cbf;
+            --nebula-blue: #4361ee;
+            --nebula-pink: #f72585;
+            --star-white: #ffffff;
+            --comet-cyan: #00f5ff;
+            --galaxy-gold: #ffd700;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--cosmic-black);
+            color: var(--star-white);
+            font-family: 'Space Mono', monospace;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .nebula {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.15;
+            background: 
+                radial-gradient(ellipse at 20% 30%, var(--nebula-purple) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 70%, var(--nebula-blue) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, var(--nebula-pink) 0%, transparent 60%);
+            filter: blur(80px);
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem 0;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--comet-cyan), var(--galaxy-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        .back-link {
+            color: var(--comet-cyan);
+            text-decoration: none;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .back-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--comet-cyan), var(--galaxy-gold));
+            transition: width 0.3s;
+        }
+
+        .back-link:hover::after {
+            width: 100%;
+        }
+
+        .journey-section {
+            min-height: 100vh;
+            padding: 10rem 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .journey-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .journey-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--comet-cyan), var(--galaxy-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .journey-subtitle {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .journey-block {
+            max-width: 100%;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 4rem;
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .journey-text {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1.15rem;
+            line-height: 2;
+            margin-bottom: 1.8rem;
+        }
+
+        .journey-text:last-child {
+            margin-bottom: 0;
+        }
+
+        .journey-text strong {
+            color: var(--comet-cyan);
+        }
+
+        .journey-images {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .journey-img {
+            max-width: 100%;
+            width: 300px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+            border: 2px solid rgba(0, 245, 255, 0.3);
+            transition: all 0.3s;
+        }
+
+        .journey-img:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 245, 255, 0.4);
+            border-color: var(--comet-cyan);
+            cursor: pointer;
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            box-shadow: 0 0 50px rgba(0, 245, 255, 0.5);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 3rem;
+            cursor: pointer;
+        }
+
+        .journey-project-link {
+            margin: 1.5rem 0;
+        }
+
+        .journey-images .journey-project-link {
+            margin: 0;
+            width: 300px;
+            height: 200px;
+        }
+
+        .journey-images .journey-project-link a {
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+            border-radius: 15px;
+            background: rgba(0, 245, 255, 0.1);
+            border: 2px solid rgba(0, 245, 255, 0.3);
+        }
+
+        .journey-project-link a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: rgba(0, 245, 255, 0.1);
+            border: 1px solid var(--comet-cyan);
+            border-radius: 30px;
+            color: var(--comet-cyan);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .journey-project-link a:hover {
+            background: var(--comet-cyan);
+            color: var(--cosmic-black);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 245, 255, 0.4);
+        }
+
+        .journey-milestone {
+            text-align: center;
+            padding: 2.5rem;
+            background: linear-gradient(135deg, rgba(123, 44, 191, 0.3), rgba(247, 37, 133, 0.2));
+            border: 2px solid var(--nebula-pink);
+            border-radius: 25px;
+            margin-top: 2rem;
+            box-shadow: 0 0 40px rgba(247, 37, 133, 0.3);
+            animation: milestoneGlow 3s infinite;
+        }
+
+        .journey-btn-container {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .journey-btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--nebula-purple), var(--nebula-pink));
+            border: none;
+            border-radius: 30px;
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .journey-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(247, 37, 133, 0.5);
+        }
+
+        .journey-experience {
+            margin: 2rem 0;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+        }
+
+        .experience-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--comet-cyan);
+            margin-bottom: 1rem;
+        }
+
+        @keyframes milestoneGlow {
+            0%, 100% { box-shadow: 0 0 40px rgba(247, 37, 133, 0.3); }
+            50% { box-shadow: 0 0 60px rgba(247, 37, 133, 0.5), 0 0 80px rgba(123, 44, 191, 0.3); }
+        }
+
+        .milestone-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .milestone-text {
+            font-size: 1.15rem;
+            color: rgba(255, 255, 255, 0.95);
+            line-height: 1.8;
+        }
+
+        .milestone-text strong {
+            color: var(--comet-cyan);
+        }
+
+        @media (max-width: 768px) {
+            nav .container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .journey-section {
+                padding: 8rem 0;
+            }
+
+            .journey-block {
+                padding: 2rem 1.5rem;
+                border-radius: 20px;
+            }
+
+            .journey-text {
+                font-size: 1rem;
+                line-height: 1.8;
+            }
+
+            .journey-milestone {
+                padding: 2rem 1.5rem;
+            }
+
+            .milestone-text {
+                font-size: 1.05rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="starfield" id="starfield"></div>
+    <div class="nebula"></div>
+
+
+    <section class="journey-section">
+        <div class="container">
+            <div class="journey-header">
+                <h1 class="journey-title">My Journey</h1>
+                <p class="journey-subtitle">From struggles to success</p>
+            </div>
+            <div class="journey-block">
+                <p class="journey-text">
+                    Hello, I am <strong>Raju Jonnada</strong> from <strong>Gayatri Vidya Parishad College of Engineering</strong>, Visakhapatnam in the field of Information Technology.
+                </p>
+                <p class="journey-text">
+                    After completing graduation in 2025, I have faced difficult phase in my career. In campus placements I have attended multiple interviews but I not cleared any of them. This made me clueless what i am going wrong. After campus placements done i am thinking what to do next at that time i am searching different coaching institutes in Vijayawada and Hyderabad who gives best learning with placement opportunity, but i realized they were not giving practical knowledge.
+                </p>
+                <p class="journey-text">
+                    At that time, my friend <strong>Pavan Kumar Varanasi</strong> suggested me to join <strong>AI Karyashala</strong>. Joining in AI Karyashala became a turning point of my career. In AI Karyashala, I have learnt everything from scratch like writing on paper Algorithms to AI Agents.
+                </p>
+
+                <p class="journey-text">
+                    I have started doing what I have learned and experienced through small projects. One of my first project was creating a <strong>Python script to generate ID cards with QR codes</strong> along with my friend <strong>Siva Rama Krishna Malla</strong>. At that time i felt confident what i have done and doing.
+                </p>
+                <div class="journey-images">
+                    <img src="images/AIK073930_front.png" alt="ID Card Generator Project" class="journey-img">
+                    <img src="images/AIK073930_front.png" alt="ID Card Generator Project" class="journey-img">
+                    <div class="journey-project-link">
+                        <a href="https://github.com/JonnadaRaju/Profile_Builder" target="_blank">
+                            <span>📄</span> ID Card Generator Project
+                        </a>
+                    </div>
+                </div>
+
+                <p class="journey-text">
+                    One of the best experience was attending <strong>APDTS</strong>, Where I have learned about How AI is evolving in multiple sectors. At that time I have thought what we can really do with AI. It changed my entire mindset about AI. I also got an overview of how AI is evolving in the real world when my mentor <strong>Rohini Kumar Barla</strong> shared his experience from an <strong>AI Summit in Delhi</strong>. This helped me understand the big picture of AI.
+                </p>
+                <div class="journey-images">
+                    <img src="images/apdts1.png" alt="APDTS Event" class="journey-img">
+                    <img src="images/apdts2.webp" alt="APDTS Event" class="journey-img">
+                </div>
+            
+                <p class="journey-text">
+                    Another major important step is teaching. I participated in a <strong>2-day bootcamp at KIET College</strong>, where I explained topics like Version Control and Linux to around <strong>60–80 students</strong>. Standing in front of that many people and teaching gave me a lot of confidence and helped me improve my communication skills.
+                </p>
+
+                <div class="journey-images">
+                    <img src="images/kiet1.jpeg" alt="KIET Bootcamp" class="journey-img">
+                    <img src="images/kiet2.jpeg" alt="KIET Bootcamp" class="journey-img">
+                    <img src="images/kiet3.jpeg" alt="KIET Bootcamp" class="journey-img">
+                </div>
+
+                <p class="journey-text">
+                    I also got an overview of how AI is evolving in the real world when my mentor shared insights from an <strong>AI Summit in Delhi</strong>. This helped me understand the bigger picture of AI and where the industry is heading.
+                </p>
+
+                <p class="journey-text">
+                    After that I have participated in a <strong>24-hour buildathon</strong> conducted by <strong>AI for Vizag</strong>. <I></I> build a project <strong>AI Banking Data Assistant</strong> and integrated speech-to-text in multiple language like Telugu, Hindi and English using <strong>sarvam.ai</strong> and also deployed project in render which we are explored in AI Karyashala.
+                </p>
+                <div class="journey-images">
+                    <video src="images/ai-banking-demo.mp4" alt="AI Banking Demo" class="journey-img" controls></video>
+                    <div class="journey-project-link">
+                        <a href="https://github.com/JonnadaRaju/AI-Banking-Data-Assistant" target="_blank">
+                            <span>📄</span> AI Banking Data Assistant Project
+                        </a>
+                    </div>
+                </div>
+                <p class="journey-text">
+                    One student came from <strong>Andhra University</strong> and told about his project related to <strong>model training using YOLOv8 for bangle detection</strong>. It motivated me to build this type of project so i have done <strong>water bottle detection</strong> project using the YOLO model, where I learned how models are trained and how object detection works in real-world scenarios.
+                </p>
+                <div class="journey-images">
+                    <img src="images/output.png" alt="Water Bottles Detection Project" class="journey-img">
+                    <img src="images/plastic.jpeg" alt="Plastic Bottle Detection" class="journey-img">
+                </div>
+                <p class="journey-text">
+                    At the same time, I explored modern AI concepts like <strong>Large language Models</strong>, <strong>Retrieval Augmented Generation</strong> and <strong>AI Agents</strong>. I also worked with tools like <strong>Ollama</strong> and <strong>OpenClaw</strong>. This helped me understand how AI applications are built.
+                </p>
+                <p class="journey-text">
+                    After Course ending my mindset fully changed from confusion to confident on building AI-based applications.
+                </p>
+                <div class="journey-btn-container">
+                    <a href="index.html#projects" class="journey-btn">View All Projects →</a>
+                </div>
+               
+                
+                <div class="journey-milestone">
+                    <span class="milestone-icon">🎉</span>
+                    <p class="milestone-text">
+                        Finally, I secured <strong>2-month internship with placement</strong> at <strong>Optficail.ai</strong> as a <strong>Graduate Engineer Trainee</strong>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightbox-img" src="" alt="Full size image">
+    </div>
+
+    <script>
+        function createStarfield() {
+            const starfield = document.getElementById('starfield');
+            const starCount = 150;
+
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                const size = Math.random() * 2 + 1;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                
+                starfield.appendChild(star);
+            }
+        }
+
+        createStarfield();
+
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxClose = document.querySelector('.lightbox-close');
+
+        document.querySelectorAll('.journey-img').forEach(img => {
+            img.addEventListener('click', () => {
+                lightboxImg.src = img.src;
+                lightbox.classList.add('active');
+            });
+        });
+
+        lightbox.addEventListener('click', () => {
+            lightbox.classList.remove('active');
+        });
+
+        lightboxClose.addEventListener('click', (e) => {
+            e.stopPropagation();
+            lightbox.classList.remove('active');
+        });
+    </script>
+</body>
+</html>
